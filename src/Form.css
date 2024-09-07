@@ -1,0 +1,72 @@
+input[type=text], select {
+  padding: 12px 20px;
+  margin: 8px 1;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+  justify-content: center;
+}
+
+input[type=text]:focus {
+  border: 3px solid #555;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+.Form {
+
+  margin: auto;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: right;
+
+  /* width: 65%; */
+  background: #ffffff;
+  box-shadow: 0px 14px 80px rgba(29, 30, 49, 0.2);
+  padding: 40px 55px 45px 55px;
+  border-radius: 15px;
+  transition: all .3s;
+}
+
+.forgot-password,
+.forgot-password a {
+  text-align: right;
+  font-size: 15px;
+  padding-top: 10px;
+  color: #7f7d7d;
+  margin: 0;
+}
+
+.forgot-password a {
+  color: #167bff;
+  font-size: 17px;
+
+}
+
+.card-center {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 12px;
+  transition: 0.3s;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 20px;
+  text-align: center;
+}
+.card-right {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 12px;
+  transition: 0.3s;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 20px;
+  text-align: right;
+}
