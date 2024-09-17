@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 // import items from "./data";
 import axios from 'axios';
 import Links from '../Links';
+import Cookie from 'universal-cookie';
 
 
 const ServerContext = React.createContext();
@@ -17,7 +18,11 @@ class ServerProvider extends Component {
     };
 
     getData() {
-        axios.get(Links.baseLink + `/servers`).then(
+        const config = {
+            headers: { Authorization: `Bearer ${new Cookie().get("userToken")}` }
+        };
+
+        axios.get(Links.baseLink + `/servers/user`, config).then(
             res => {
                 // console.log(res);
                 if (res.status === 200) {

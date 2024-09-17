@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import axios from 'axios';
 import Links from '../Links';
 import { Icon } from 'react-icons-kit';
@@ -8,11 +8,21 @@ import { Form } from "react-bootstrap";
 import Cookie from 'universal-cookie';
 import { useReactTable, flexRender, getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import EditUserPopup from './EditUserPopup';
 
 export default function UsersTable({ users = [] }) {
 
+    const [modalShow, setModalShow] = useState(false);
+    const [Row, setRow] = useState(null);
+    const [name, setName] = useState(null);
+    const [password, setPassword] = useState(null);
+
+
     const handelEditClick = (row) => {
-        // console.log(row.id);
+        setRow(row);
+        setName(row.name);
+        
+        setModalShow(true);
     };
 
     const handelDeleteClick = (row) => {
@@ -116,6 +126,7 @@ export default function UsersTable({ users = [] }) {
     });
 
     return (
+        <>
         <div>
             <div className="card-center">
                 <table className="table table-striped table-hover">
@@ -173,5 +184,19 @@ export default function UsersTable({ users = [] }) {
                 </div>
             </div>
         </div>
+        
+        <EditUserPopup
+                show={modalShow}
+                row={Row}
+                onHide={() => setModalShow(false)}
+                name={name}
+                setname={setName}
+
+                password={password}
+                setPassword={setPassword}
+            />
+
+    </>
+
     );
 }

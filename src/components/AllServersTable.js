@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import Links from '../Links';
@@ -14,12 +14,13 @@ import UserDataPopup from './UserDataPopup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Link } from 'react-router-dom'
+import { wait } from '@testing-library/user-event/dist/utils';
 
 
 export default function AllServersTable({ servers = [], showAdminFeatures = true }) {
     // states used in user data popup
     const [ShowUserPopup, setShowUserPopup] = useState(false);
-    const [UserName, setUserName] = useState(null);
+    const [userName, setUserName] = useState(null);
 
     const [IsDataLoading, setIsDataLoading] = useState(true);
 
@@ -29,18 +30,20 @@ export default function AllServersTable({ servers = [], showAdminFeatures = true
 
     const [Name, setName] = useState(null);
     const [IP, setIP] = useState(null);
+    const [usersID, setUsersID] = useState(null);
 
     const [Scripts, setScripts] = useState(null)
- 
 
+   
 
     const handelEditClick = (row) => {
         setRow(row);
         setName(row.name);
         setIP(row.ip);
-        getServerScripts(row.id)
- 
+        setUsersID(row.usersID);
+        getServerScripts(row.id);
         setModalShow(true);
+
     };
 
     const handelDeleteClick = (row) => {
@@ -56,7 +59,7 @@ export default function AllServersTable({ servers = [], showAdminFeatures = true
                 }
             })
             .catch(error => {
-                console.log(error.response);
+                // console.log(error.response);
                 alert("Something went wrong, please try again.");
             });
     };
@@ -70,16 +73,22 @@ export default function AllServersTable({ servers = [], showAdminFeatures = true
         axios.get(`${Links.baseLink}/scripts/byServer/${id}`, config)
             .then(res => {
                 if (res.status === 200) {
-                    console.log(res.data)
+                    // console.log(res.data)
                     setScripts(res.data);
                 }
             })
             .catch(error => {
-                console.log(error.response);
+                // console.log(error.response);
                 alert("يوجد عطل ما ارجو المحاولة لاحقا");
             });
     };
 
+
+    const handelChangeId = event =>{
+        
+        const selectedIDS = event ? event.map(option => option.value) : [];
+        setUsersID(selectedIDS);
+    };
 
     const getUserDate = (id) => {
         const config = {
@@ -91,10 +100,11 @@ export default function AllServersTable({ servers = [], showAdminFeatures = true
                 if (res.status === 200) {
                     setUserName(res.data.name);
                     setIsDataLoading(false);
+                    console.log(userName)
                 }
             })
             .catch(error => {
-                console.log(error.response);
+                // console.log(error.response);
                 alert("يوجد عطل ما ارجو المحاولة لاحقا");
             });
 
@@ -116,18 +126,22 @@ export default function AllServersTable({ servers = [], showAdminFeatures = true
                     {/* <a href={`/servers/${info.row.original.id}`}>
                         <Icon size={20} icon={ic_north_east_outline} />
                     </a> */}
-                    <Link to={{ pathname: '/SingleServer', state: { id: info.row.original.id } }} >
+                    {/* <Link to={{ pathname: '/SingleServer', state: { id: info.row.original.id } }} >
                         <p> {info.getValue()} <Icon size={20} icon={ic_north_east_outline} /> </p>
+                    </Link> */}
+
+                    <Link to={{ pathname: `/SingleServer/${info.row.original.id}`}} >
+                    <p> {info.getValue()} <Icon size={20} icon={ic_north_east_outline} /> </p>
                     </Link>
                 </center>
             ),
         },
         {
-            accessorKey: 'owner',
+            accessorKey: 'owenerID',
             header: 'Owner',
             cell: (info) => (
                 <center>
-                    <button className="btn btn-outline" onClick={() => getUserDate(info.getValue())}>
+                    <button className="btn btn-outline" onClick={() => getUserDate(info.row.original.owenerID)}>
                         <Icon size={26} icon={user} />
                     </button>
                 </center>
@@ -219,20 +233,22 @@ export default function AllServersTable({ servers = [], showAdminFeatures = true
 
             <EditServerPopup
                 show={modalShow}
-                Row={Row}
+                row={Row}
                 onHide={() => setModalShow(false)}
-                Name={Name}
-                setName={setName}
-                IP={IP}
-                setIP={setIP}
+                name={Name}
+                setname={setName}
+                ip={IP}
+                setip={setIP}
+                usersID={usersID}
+                handelChangeId={handelChangeId}
 
-                Scripts={Scripts}
+                scripts={Scripts}
             />
 
             <UserDataPopup
                 show={ShowUserPopup}
                 onHide={() => setShowUserPopup(false)}
-                UserName={UserName}
+                name={userName}
                 IsDataLoading={IsDataLoading}
             />
         </>

@@ -14,6 +14,7 @@ export default class AddNewServerAdmin extends Component {
     state = {
         name: null,
         usersID:[],
+        owenerID: null,
         ip:null,
         users : [],
         loading: true,
@@ -64,6 +65,10 @@ export default class AddNewServerAdmin extends Component {
         this.setState({ usersID: selectedIDS });
     };
 
+    handelChangeOwnerId = event =>{
+        this.setState({ owenerID: event.value });
+    };
+
     handelSubmit = event =>{
         event.preventDefault();
         // console.log(this.state);
@@ -80,7 +85,8 @@ export default class AddNewServerAdmin extends Component {
                 const server={
                     usersID: this.state.usersID,
                     name: this.state.name,
-                    ip: this.state.ip
+                    ip: this.state.ip,
+                    owenerID: this.state.owenerID
                 }
 
                 axios.post(Links.baseLink + "/servers/create", server, config).then(
@@ -128,15 +134,14 @@ export default class AddNewServerAdmin extends Component {
                     <div className="Form" >
                      <div >
                     <form onSubmit={this.handelSubmit}>
-                        <Form.Group className="mb-3"  onChange={this.handelChange}>
+                        
+                        <Form.Group className="mb-3"  onChange={this.handelChangeOwnerId}>
                             <Form.Label dir="rtl"> صاحب ال Server : </Form.Label>
-                            {/* <Select onChange={this.handelChange} name="userServerId">
-                                {this.state.users.map(option => (
-                                    <option key={option.id} value={option.id}>
-                                    {option.email}
-                                    </option>
-                                ))}
-                            </Select> */}
+                            <Select options={this.state.options} onChange={this.handelChangeOwnerId}/>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3"  onChange={this.handelChange}>
+                            <Form.Label dir="rtl">المستخدمون: </Form.Label>
                             <Select options={this.state.options} onChange={this.handelChangeId} isMulti/>
                         </Form.Group>
 

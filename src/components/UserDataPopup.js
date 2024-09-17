@@ -32,23 +32,6 @@ export default function UserDataPopup(props) {
                             </Col>
                         </Form.Group>
 
-                        <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm="3">
-                                الإيميل :
-                            </Form.Label>
-                            <Col sm="8">
-                                <Form.Control readOnly defaultValue={props.email} />
-                            </Col>
-                        </Form.Group>
-
-                        <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm="3">
-                                رقم الهاتف :
-                            </Form.Label>
-                            <Col sm="8">
-                            <   Form.Control readOnly defaultValue={props.phone} />
-                            </Col>
-                        </Form.Group>
                     </>
                     }
 

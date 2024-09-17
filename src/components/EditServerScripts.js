@@ -13,7 +13,7 @@ import EditScriptPopup from './EditScriptPopup';
 
 export default function EditServerScripts({props}) {
 
-    const server = props.Row.id;
+    const server = props.row.id;
 
     const [name, setName] = useState("");
     const [command, setCommand] = useState("");
@@ -23,7 +23,7 @@ export default function EditServerScripts({props}) {
     const [ShowEditScriptPopup, setShowEditScriptPopup] = useState(false);
     const [scriptEdit, setscriptEdit] = useState("");
     
-    const Scripts = props.Scripts 
+    const Scripts = props.scripts 
     
     const deleteScript = (event, script) =>{
         // console.log(img);
