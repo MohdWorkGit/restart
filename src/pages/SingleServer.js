@@ -33,7 +33,8 @@ export default withRouter(class SingleServer extends Component {
         server: {},
         scripts:{},
         runScript: null,
-        notFound:false
+        notFound:false,
+        runScripts:[]
     };   
     // static contextType = ServerContext;
 
@@ -81,7 +82,21 @@ export default withRouter(class SingleServer extends Component {
     componentDidMount() {
         this.getData();
     }
+
+    handleRunScript (event) {
+        this.setState((prevState) => ({
+            runScripts: [
+                {id: event.id , command: event.command, key: Math.random()},
+                ...prevState.runScripts
+            ]
+        }))
+    }
     
+    handleDeleteScript(event){
+        this.setState((prevState) => ({
+            runScripts : prevState.runScripts.filter(script => script.key !== event.key)
+        }))
+    }
     
 
     
@@ -139,15 +154,16 @@ export default withRouter(class SingleServer extends Component {
 
                         <h3 dir='rtl'>   ال Commands المضافة</h3>
                         <section className="roomslist" dir="rtl">
-                            <div className="roomslist-center">
+                            <div className="roomslist-center" style={{ whiteSpace:'nowrap' }}>
                                 {this.state.scripts?.map((scr, index )=> (
-                                    <div className='room-info' style={{ height:100,width:120, alignContent:'center', textAlign:'center' }}>
+                                    <div className='room-info' style={{ display:'inline-block', whiteSpace:'nowrap', alignContent:'center', textAlign:'center' }}>
                                         <p>{scr.name}</p>
                                         <Button variant="btn btn-danger" 
                                             className="image-item-btn"
-                                            onClick={(event) => this.setState({
-                                                runScript: scr.id,
-                                            })}
+                                            // onClick={(event) => this.setState({
+                                            //     runScript: scr.id,
+                                            // })}
+                                            onClick={() => this.handleRunScript(scr)}
                                         > 
                                         Run
                                         </Button>
@@ -159,15 +175,29 @@ export default withRouter(class SingleServer extends Component {
                     </section>
 
                     
-                        {this.state.runScript?
+                        {/* {this.state.runScript?
                         <LiveSSHOutput scriptId={this.state.runScript} />                
-                        :null}
+                        :null} */}
+
+                        {this.state.runScripts.map((script) => (
+                            <div key={script.key}>
+                                <LiveSSHOutput scriptId={script.id} command={script.command} script={script} onDelete={() => (this.handleDeleteScript(script))} />
+                            </div>
+                        ))
+                        }
                     
                 
 
             </div>
             </div>
             </div>
+
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
                 
             </>
         )

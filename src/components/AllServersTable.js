@@ -86,8 +86,10 @@ export default function AllServersTable({ servers = [], showAdminFeatures = true
 
     const handelChangeId = event =>{
         
-        const selectedIDS = event ? event.map(option => option.value) : [];
-        setUsersID(selectedIDS);
+        // const selectedIDS = event ? event.map(option => option.value) : [];
+        // setUsersID(selectedIDS);
+
+        setUsersID(event)
     };
 
     const getUserDate = (id) => {
@@ -95,7 +97,7 @@ export default function AllServersTable({ servers = [], showAdminFeatures = true
             headers: { Authorization: `Bearer ${new Cookie().get("userToken")}` }
         };
 
-        axios.get(`${Links.baseLink}/users/byId/${id}`, config)
+        axios.get(`${Links.baseLink}/users/${id}`, config)
             .then(res => {
                 if (res.status === 200) {
                     setUserName(res.data.name);
@@ -243,6 +245,7 @@ export default function AllServersTable({ servers = [], showAdminFeatures = true
                 handelChangeId={handelChangeId}
 
                 scripts={Scripts}
+                setScripts={setScripts}
             />
 
             <UserDataPopup

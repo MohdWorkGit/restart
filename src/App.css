@@ -355,6 +355,8 @@ h6 {
   text-align: right;
   font-weight: 700;
   letter-spacing: var(--mainLetterSpacing);
+  border-radius: 6px;
+  border: 1px;
 }
 /* end of room  */
 /* single room*/

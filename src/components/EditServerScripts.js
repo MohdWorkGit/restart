@@ -36,7 +36,8 @@ export default function EditServerScripts({props}) {
             res => {
                 // console.log(res);
                 if (res.status === 200) {
-                    alert("تم ازاله الصور")
+                    alert("تم ازاله Script")
+                    props.setScripts(Scripts.filter(newscript => newscript.id !== script.id))
                 }
             }).catch(error => {
                 console.log(error);
@@ -64,7 +65,9 @@ export default function EditServerScripts({props}) {
                 // console.log(res);
                 if (res.status === 200) {
                     alert("تم اضافة command")
-                    window.location.reload(false);
+                    // window.location.reload(false);
+                    props.setScripts(prevScripts => [...prevScripts, res.data])
+
 
 
                 }

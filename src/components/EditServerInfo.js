@@ -61,10 +61,12 @@ export default function EditServerInfo({props}) {
 
         event.preventDefault();
 
+        const userIDsValue = props.usersID.map(user => user.value)
+
         const change = {
             name: props.name,
             ip: props.ip,
-            usersID: props.usersID,
+            usersID: userIDsValue,
         }
         const config = {
             headers: { Authorization: `Bearer ${new Cookie().get("userToken")}` }

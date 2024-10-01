@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Cookie from 'universal-cookie'
+import Links from '../Links';
+import { Button } from 'react-bootstrap';
+import { Icon } from 'react-icons-kit';
+import { trash } from 'react-icons-kit/fa/trash'
 
 
-const LiveSSHOutput = ({ scriptId }) => {
+const LiveSSHOutput = ({ scriptId, command, script, onDelete }) => {
     const [output, setOutput] = useState([]);
 
     useEffect(() => {
@@ -31,7 +35,16 @@ const LiveSSHOutput = ({ scriptId }) => {
 
     return (
         <div>
-            <h3>Live SSH Output</h3>
+            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'10px'}}>
+                <h3 style={{margin:'0'}}>{command}</h3>
+                <Button variant="btn btn-danger"
+                    className='image-itme-btn'
+                    onClick={onDelete}
+                    >
+                    <Icon size={20} icon={trash} />
+                </Button>
+            </div>
+            
             <div style={styles.consoleContainer}>
                 {output.map((line, index) => (
                     <div key={index}  style={styles.logEntry}>{line}</div>

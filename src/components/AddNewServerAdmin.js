@@ -160,8 +160,8 @@ export default class AddNewServerAdmin extends Component {
                     </form>
                     <br />
 
-                    <p className="text-muted">
-                        ! يمكنك إضافه باقي بيانات القاعة بعد ان يتم قبولها
+                    <p className="text-muted" dir="rtl">
+                        ! يمكنك إضافه باقي بيانات Server
                     </p>
                 </div>
             </div>
